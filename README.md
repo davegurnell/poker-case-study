@@ -1,6 +1,8 @@
 # Poker Hand Comparison Case Study
 
 Scala case stufy about identifying and comparing scoring poker hands.
+Based on a Kata in the [Coding Dojo Handbook](https://leanpub.com/codingdojohandbook)
+by Emily Bache.
 
 Licensed [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
