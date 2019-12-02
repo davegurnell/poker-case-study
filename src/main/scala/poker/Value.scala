@@ -16,8 +16,8 @@ case object Queen extends Value("Q")
 case object King  extends Value("K")
 
 object Value {
-  implicit val acesLow: Ranking[Value] =
-    Ranking.by[Value] {
+  implicit val acesLow: Ordering[Value] =
+    Ordering.by {
       case Ace   =>  1
       case Two   =>  2
       case Three =>  3
@@ -33,8 +33,8 @@ object Value {
       case King  => 13
     }
 
-  implicit val acesHigh: Ranking[Value] =
-    Ranking.by[Value] {
+  implicit val acesHigh: Ordering[Value] =
+    Ordering.by {
       case Ace   => 14
       case Two   =>  2
       case Three =>  3

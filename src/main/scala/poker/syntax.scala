@@ -16,11 +16,14 @@ object syntax {
     def hand(args: Any*): Hand =
       parseHand(str).getOrElse(throw new Exception(s"Could not parse hand: $str"))
 
+    def cards(args: Any*): List[Card] =
+      hand(args).cards
+
     def card(args: Any*): Card =
       parseCard(str).getOrElse(throw new Exception(s"Could not parse card: $str"))
 
     def parseHand(str: String): Option[Hand] =
-      Some(Hand(str.split(" ").toVector.flatMap(parseCard)))
+      Some(Hand(str.split(" ").toList.flatMap(parseCard)))
 
     val cardRegex = "([A-Z0-9])([A-Z])".r
 
