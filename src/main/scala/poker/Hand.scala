@@ -1,14 +1,12 @@
 package poker
 
-import poker.syntax._
-
 case class Hand(cards: Vector[Card]) {
 
   /**
     * Remove a card from this hand.
     */
   def -(card: Card): Hand =
-    copy(cards = cards filterNot (_ == card))
+    copy(cards = cards.filterNot(_ == card))
 
   /**
     * Add a card to this hand.
@@ -58,7 +56,7 @@ case class Hand(cards: Vector[Card]) {
     import Suit.ordering._
     for {
       Selection((a, b), rest) <- this.choosePair
-      Selection(c, rest) <- rest.chooseCard
+      Selection(c, rest)      <- rest.chooseCard
       if b.value == c.value && b.suit < c.suit
     } yield Selection((a, b, c), rest)
   }
@@ -67,7 +65,7 @@ case class Hand(cards: Vector[Card]) {
     * All "straight" selections we can make from this hand.
     */
   def straight(
-    ranking: Ranking[Card]
+      ranking: Ranking[Card]
   ): Vector[Selection[(Card, Card, Card, Card, Card)]] =
     for {
       Selection(a, rest) <- this.chooseCard
@@ -97,7 +95,7 @@ case class Hand(cards: Vector[Card]) {
   def fullHouse: Vector[Selection[((Card, Card, Card), (Card, Card))]] =
     for {
       Selection(three, rest) <- this.threeOfAKind
-      Selection(pair, rest) <- rest.choosePair
+      Selection(pair, rest)  <- rest.choosePair
     } yield Selection((three, pair), rest)
 
   /**
@@ -107,7 +105,7 @@ case class Hand(cards: Vector[Card]) {
     import Suit.ordering._
     for {
       Selection((a, b, c), rest) <- this.threeOfAKind
-      Selection(d, rest) <- rest.chooseCard
+      Selection(d, rest)         <- rest.chooseCard
       if c.value == d.value && c.suit < d.suit
     } yield Selection((a, b, c, d), rest)
   }
@@ -115,19 +113,13 @@ case class Hand(cards: Vector[Card]) {
   /**
     * Return all "straight flush" selections we can make from this hand.
     */
-  def straightFlush(
-    ranking: Ranking[Card]
-  ): Vector[Selection[(Card, Card, Card, Card, Card)]] =
+  def straightFlush(ranking: Ranking[Card]): Vector[Selection[(Card, Card, Card, Card, Card)]] =
     for {
       Selection(a, rest) <- this.chooseCard
-      Selection(b, rest) <- rest.chooseCard
-      if a.suit == b.suit && ranking.pred(b, a)
-      Selection(c, rest) <- rest.chooseCard
-      if a.suit == c.suit && ranking.pred(c, b)
-      Selection(d, rest) <- rest.chooseCard
-      if a.suit == d.suit && ranking.pred(d, c)
-      Selection(e, rest) <- rest.chooseCard
-      if a.suit == e.suit && ranking.pred(e, d)
+      Selection(b, rest) <- rest.chooseCard if a.suit == b.suit && ranking.pred(b, a)
+      Selection(c, rest) <- rest.chooseCard if a.suit == c.suit && ranking.pred(c, b)
+      Selection(d, rest) <- rest.chooseCard if a.suit == d.suit && ranking.pred(d, c)
+      Selection(e, rest) <- rest.chooseCard if a.suit == e.suit && ranking.pred(e, d)
     } yield Selection((a, b, c, d, e), rest)
 
   override def toString =
@@ -135,11 +127,6 @@ case class Hand(cards: Vector[Card]) {
 }
 
 object Hand {
-  def apply(cards: Card*): Hand =
-    Hand(cards.toVector)
-
-  val empty: Hand =
-    Hand()
 
   /**
     * Order by the best "high card" selection.
@@ -174,7 +161,7 @@ object Hand {
     */
   val straight: Ordering[Hand] =
     Ordering.by((hand: Hand) => hand.straight(Card.acesHigh)) orElse
-      Ordering.by((hand: Hand) => hand.straight(Card.acesLow))
+    Ordering.by((hand: Hand) => hand.straight(Card.acesLow))
 
   /**
     * Order by the best "flush" selection.
@@ -199,19 +186,19 @@ object Hand {
     */
   val straightFlush: Ordering[Hand] =
     Ordering.by((hand: Hand) => hand.straightFlush(Card.acesHigh)) orElse
-      Ordering.by((hand: Hand) => hand.straightFlush(Card.acesLow))
+    Ordering.by((hand: Hand) => hand.straightFlush(Card.acesLow))
 
   /**
     * Order by the best selection of any type.
     */
   implicit val ordering: Ordering[Hand] =
     straightFlush orElse
-      fourOfAKind orElse
-      fullHouse orElse
-      flush orElse
-      straight orElse
-      threeOfAKind orElse
-      twoPairs orElse
-      singlePair orElse
-      highestCard
+    fourOfAKind orElse
+    fullHouse orElse
+    flush orElse
+    straight orElse
+    threeOfAKind orElse
+    twoPairs orElse
+    singlePair orElse
+    highestCard
 }
