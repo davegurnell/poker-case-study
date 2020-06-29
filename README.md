@@ -32,7 +32,7 @@ import poker._, poker.syntax._
 // import poker._
 // import poker.syntax._
 
-val hand = h"2C 2D 3S 3D 3H"
+val hand = hand"2C 2D 3S 3D 3H"
 // hand: Hand = Hand(2C,2D,3S,3D,3H)
 
 val pairs = hand.choosePair

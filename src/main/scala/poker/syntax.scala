@@ -1,40 +1,28 @@
 package poker
 
 object syntax {
-  /**
-   * Helper allowing users to chain orderings.
-   *
-   * e.g. `ordering1 orElse ordering2`
-   */
-  implicit class OrderingOps[A](ordering1: Ordering[A]) {
-    def orElse[B <: A](ordering2: Ordering[B]): Ordering[B] =
-      new Ordering[B] {
-        def compare(x: B, y: B): Int = {
-          ordering1.compare(x, y) match {
-            case 0 => ordering2.compare(x, y)
-            case n => n
-          }
-        }
-      }
-  }
 
   /**
-   * Helper that enables string-interpolator-style syntax:
-   *
-   * - `h"2C 3C 4C"` creates a `Hand`;
-   * - `c"2C"` creates a `Card`.
-   *
-   * Note that this doesn't support interpolation properly,
-   * so h"${foo}" won't provide the expected result.
-   */
+    * Helper that enables string-interpolator-style syntax:
+    *
+    * - `h"2C 3C 4C"` creates a `Hand`;
+    * - `c"2C"` creates a `Card`.
+    *
+    * Note that this doesn't support interpolation properly,
+    * so h"${foo}" won't provide the expected result.
+    */
   implicit class StringOps(val sc: StringContext) {
     def str = sc.parts.mkString
 
-    def h(args: Any*): Hand =
-      parseHand(str).getOrElse(throw new Exception(s"Could not parse hand: $str"))
+    def hand(args: Any*): Hand =
+      parseHand(str).getOrElse(
+        throw new Exception(s"Could not parse hand: $str")
+      )
 
-    def c(args: Any*): Card =
-      parseCard(str).getOrElse(throw new Exception(s"Could not parse card: $str"))
+    def card(args: Any*): Card =
+      parseCard(str).getOrElse(
+        throw new Exception(s"Could not parse card: $str")
+      )
 
     def parseHand(str: String): Option[Hand] =
       Some(Hand(str.split(" ").toVector.flatMap(parseCard)))
@@ -46,7 +34,7 @@ object syntax {
         case cardRegex(value, suit) =>
           for {
             value <- parseValue(value)
-            suit  <- parseSuit(suit)
+            suit <- parseSuit(suit)
           } yield Card(value, suit)
 
         case _ => None

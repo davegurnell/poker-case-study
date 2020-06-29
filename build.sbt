@@ -1,1 +1,3 @@
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+scalaVersion := "2.13.1"
+
+libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.8" % Test)
