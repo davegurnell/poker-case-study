@@ -5,18 +5,8 @@ case class Hand(cards: Vector[Card]) {
   /**
     * Remove a card from this hand.
     */
-  def -(card: Card): Hand =
+  def remove(card: Card): Hand =
     copy(cards = cards.filterNot(_ == card))
-
-  /**
-    * Add a card to this hand.
-    */
-  def +(card: Card): Hand =
-    copy(cards = cards :+ card)
-
-  /** Does this hand beat that hand? */
-  def beats(that: Hand): Boolean =
-    Hand.ordering.compare(this, that) > 0
 
   /**
     * All "card high" selections we can make from this hand,
@@ -24,7 +14,7 @@ case class Hand(cards: Vector[Card]) {
     */
   def chooseCard: Vector[Selection[Card]] =
     cards
-      .map(card => Selection(card, this - card))
+      .map(card => Selection(card, this.remove(card)))
       .sorted(Selection.ordering(Card.ordering.reverse))
 
   /**

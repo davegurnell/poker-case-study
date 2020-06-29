@@ -192,7 +192,7 @@ class HandSpec extends FreeSpec with Matchers {
       Matcher(
         l =>
           MatchResult(
-            (l beats r) && !(r beats l),
+            Hand.ordering.compare(l, r) > 0 && Hand.ordering.compare(r, l) < 0,
             s"$l does not beat $r",
             s"$l beats $r"
           )
@@ -202,7 +202,7 @@ class HandSpec extends FreeSpec with Matchers {
       Matcher(
         l =>
           MatchResult(
-            !(l beats r) && !(r beats l),
+            Hand.ordering.compare(l, r) == 0 && Hand.ordering.compare(r, l) == 0,
             s"$l does not tie $r",
             s"$l ties $r"
           )
