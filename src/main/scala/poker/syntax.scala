@@ -1,26 +1,31 @@
 package poker
 
 object syntax {
+
   /**
-   * Helper that enables string-interpolator-style syntax:
-   *
-   * - `hand"2C 3C 4C"` creates a `Hand`;
-   * - `card"2C"` creates a `Card`.
-   *
-   * Note that this doesn't support interpolation properly,
-   * so h"${foo}" won't provide the expected result.
-   */
+    * Helper that enables string-interpolator-style syntax:
+    *
+    * - `hand"2C 3C 4C"` creates a `Hand`;
+    * - `card"2C"` creates a `Card`.
+    *
+    * Note that this doesn't support interpolation properly,
+    * so hand"${foo}" won't provide the expected result.
+    */
   implicit class StringOps(val sc: StringContext) {
     def str = sc.parts.mkString
 
     def hand(args: Any*): Hand =
-      parseHand(str).getOrElse(throw new Exception(s"Could not parse hand: $str"))
+      parseHand(str).getOrElse(
+        throw new Exception(s"Could not parse hand: $str")
+      )
 
     def cards(args: Any*): List[Card] =
       hand(args).cards
 
     def card(args: Any*): Card =
-      parseCard(str).getOrElse(throw new Exception(s"Could not parse card: $str"))
+      parseCard(str).getOrElse(
+        throw new Exception(s"Could not parse card: $str")
+      )
 
     def parseHand(str: String): Option[Hand] =
       Some(Hand(str.split(" ").toList.flatMap(parseCard)))
@@ -32,7 +37,7 @@ object syntax {
         case cardRegex(value, suit) =>
           for {
             value <- parseValue(value)
-            suit  <- parseSuit(suit)
+            suit <- parseSuit(suit)
           } yield Card(value, suit)
 
         case _ => None
