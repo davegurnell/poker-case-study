@@ -8,132 +8,97 @@ class HandSpec extends FreeSpec with Matchers {
   "hand orderings" - {
     "highest card" in {
       // One card wins:
-      Hand.highestCard
-        .compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 7C") should be(-1)
-      Hand.highestCard
-        .compare(hand"2C 3S 4D 5H 7C", hand"2C 3S 4D 5H 6C") should be(+1)
+      Hand.highestCard.compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 7C") should be(-1)
+      Hand.highestCard.compare(hand"2C 3S 4D 5H 7C", hand"2C 3S 4D 5H 6C") should be(+1)
 
       // Both cards the same:
-      Hand.highestCard
-        .compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
+      Hand.highestCard.compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
     }
 
     "single pair" in {
       // One pair wins:
-      Hand.singlePair
-        .compare(hand"2C 3S 4D 6H 6C", hand"2C 3S 4D 7H 7C") should be(-1)
-      Hand.singlePair
-        .compare(hand"2C 3S 4D 7H 7C", hand"2C 3S 4D 6H 6C") should be(+1)
+      Hand.singlePair.compare(hand"2C 3S 4D 6H 6C", hand"2C 3S 4D 7H 7C") should be(-1)
+      Hand.singlePair.compare(hand"2C 3S 4D 7H 7C", hand"2C 3S 4D 6H 6C") should be(+1)
 
       // Both pairs the same:
-      Hand.singlePair
-        .compare(hand"2C 3S 4D 6H 6C", hand"2C 3S 4D 6H 6S") should be(0)
+      Hand.singlePair.compare(hand"2C 3S 4D 6H 6C", hand"2C 3S 4D 6H 6S") should be(0)
 
       // Neither hand matches:
-      Hand.singlePair
-        .compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
+      Hand.singlePair.compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
     }
 
     "two pairs" in {
       // Highest pair different:
-      Hand.twoPairs
-        .compare(hand"2C 3S 3D 6H 6C", hand"2C 3S 3D 7H 7C") should be(-1)
-      Hand.twoPairs
-        .compare(hand"2C 3S 3D 7H 7C", hand"2C 3S 3D 6H 6C") should be(+1)
+      Hand.twoPairs.compare(hand"2C 3S 3D 6H 6C", hand"2C 3S 3D 7H 7C") should be(-1)
+      Hand.twoPairs.compare(hand"2C 3S 3D 7H 7C", hand"2C 3S 3D 6H 6C") should be(+1)
 
       // Lowest pair different:
-      Hand.twoPairs
-        .compare(hand"2C 3S 3D 6H 6C", hand"2C 4S 4D 6H 6C") should be(-1)
-      Hand.twoPairs
-        .compare(hand"2C 4S 4D 6H 6C", hand"2C 3S 3D 6H 6C") should be(+1)
+      Hand.twoPairs.compare(hand"2C 3S 3D 6H 6C", hand"2C 4S 4D 6H 6C") should be(-1)
+      Hand.twoPairs.compare(hand"2C 4S 4D 6H 6C", hand"2C 3S 3D 6H 6C") should be(+1)
 
       // Both pairs the same:
-      Hand.twoPairs
-        .compare(hand"2C 3S 3D 6H 6C", hand"2C 3S 3D 6H 6S") should be(0)
+      Hand.twoPairs.compare(hand"2C 3S 3D 6H 6C", hand"2C 3S 3D 6H 6S") should be(0)
 
       // Neither hand matches:
-      Hand.twoPairs
-        .compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
+      Hand.twoPairs.compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
     }
 
     "three of a kind" in {
       // Values differ:
-      Hand.threeOfAKind
-        .compare(hand"2C 3S 6D 6H 6C", hand"2C 3S 7D 7H 7C") should be(-1)
-      Hand.threeOfAKind
-        .compare(hand"2C 3S 7D 7H 7C", hand"2C 3S 6D 6H 6C") should be(+1)
+      Hand.threeOfAKind.compare(hand"2C 3S 6D 6H 6C", hand"2C 3S 7D 7H 7C") should be(-1)
+      Hand.threeOfAKind.compare(hand"2C 3S 7D 7H 7C", hand"2C 3S 6D 6H 6C") should be(+1)
 
       // One hand matches:
-      Hand.threeOfAKind
-        .compare(hand"2C 3S 3D 6H 6C", hand"2C 4S 6D 6H 6C") should be(-1)
-      Hand.threeOfAKind
-        .compare(hand"2C 4S 6D 6H 6C", hand"2C 3S 4D 6H 6C") should be(+1)
+      Hand.threeOfAKind.compare(hand"2C 3S 3D 6H 6C", hand"2C 4S 6D 6H 6C") should be(-1)
+      Hand.threeOfAKind.compare(hand"2C 4S 6D 6H 6C", hand"2C 3S 4D 6H 6C") should be(+1)
 
       // Neither hand matches:
-      Hand.threeOfAKind
-        .compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
+      Hand.threeOfAKind.compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
     }
 
     "four of a kind" in {
       // Values differ:
-      Hand.fourOfAKind
-        .compare(hand"2C 6S 6D 6H 6C", hand"2C 7S 7D 7H 7C") should be(-1)
-      Hand.fourOfAKind
-        .compare(hand"2C 7S 7D 7H 7C", hand"2C 6S 6D 6H 6C") should be(+1)
+      Hand.fourOfAKind.compare(hand"2C 6S 6D 6H 6C", hand"2C 7S 7D 7H 7C") should be(-1)
+      Hand.fourOfAKind.compare(hand"2C 7S 7D 7H 7C", hand"2C 6S 6D 6H 6C") should be(+1)
 
       // One hand matches:
-      Hand.fourOfAKind
-        .compare(hand"2C 3S 3D 6H 6C", hand"2C 6S 6D 6H 6C") should be(-1)
-      Hand.fourOfAKind
-        .compare(hand"2C 6S 6D 6H 6C", hand"2C 3S 4D 6H 6C") should be(+1)
+      Hand.fourOfAKind.compare(hand"2C 3S 3D 6H 6C", hand"2C 6S 6D 6H 6C") should be(-1)
+      Hand.fourOfAKind.compare(hand"2C 6S 6D 6H 6C", hand"2C 3S 4D 6H 6C") should be(+1)
 
       // Neither hand matches:
-      Hand.fourOfAKind
-        .compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
+      Hand.fourOfAKind.compare(hand"2C 3S 4D 5H 6C", hand"2C 3S 4D 5H 6S") should be(0)
     }
 
     "straight" - {
       "aces low" in {
         // Values differ:
-        Hand.straight
-          .compare(hand"AC 2S 3D 4H 5C", hand"2C 3S 4D 5H 6C") should be(-1)
-        Hand.straight
-          .compare(hand"2C 3S 4D 5H 6C", hand"AC 2S 3D 4H 5C") should be(+1)
+        Hand.straight.compare(hand"AC 2S 3D 4H 5C", hand"2C 3S 4D 5H 6C") should be(-1)
+        Hand.straight.compare(hand"2C 3S 4D 5H 6C", hand"AC 2S 3D 4H 5C") should be(+1)
 
         // One hand matches:
-        Hand.straight
-          .compare(hand"AC 2S 3D 4H 6C", hand"AC 2S 3D 4H 5C") should be(-1)
-        Hand.straight
-          .compare(hand"AC 2S 3D 4H 5C", hand"AC 2S 3D 4H 6C") should be(+1)
+        Hand.straight.compare(hand"AC 2S 3D 4H 6C", hand"AC 2S 3D 4H 5C") should be(-1)
+        Hand.straight.compare(hand"AC 2S 3D 4H 5C", hand"AC 2S 3D 4H 6C") should be(+1)
 
         // Neither hand matches:
-        Hand.straight
-          .compare(hand"AC 2S 3D 4H 6C", hand"AC 2S 3D 4H 7C") should be(0)
+        Hand.straight.compare(hand"AC 2S 3D 4H 6C", hand"AC 2S 3D 4H 7C") should be(0)
       }
 
       "aces high" in {
         // Values differ:
-        Hand.straight
-          .compare(hand"9C TC JH QS KD", hand"TC JH QS KD AC") should be(-1)
-        Hand.straight
-          .compare(hand"TC JH QS KD AC", hand"9C TC JH QS KD") should be(+1)
+        Hand.straight.compare(hand"9C TC JH QS KD", hand"TC JH QS KD AC") should be(-1)
+        Hand.straight.compare(hand"TC JH QS KD AC", hand"9C TC JH QS KD") should be(+1)
 
         // One hand matches:
-        Hand.straight
-          .compare(hand"9C JH QS KD AC", hand"TC JH QS KD AC") should be(-1)
-        Hand.straight
-          .compare(hand"TC JH QS KD AC", hand"9C JH QS KD AC") should be(+1)
+        Hand.straight.compare(hand"9C JH QS KD AC", hand"TC JH QS KD AC") should be(-1)
+        Hand.straight.compare(hand"TC JH QS KD AC", hand"9C JH QS KD AC") should be(+1)
 
         // Neither hand matches:
-        Hand.straight
-          .compare(hand"9C JH QS KD AC", hand"8C JH QS KD AC") should be(0)
+        Hand.straight.compare(hand"9C JH QS KD AC", hand"8C JH QS KD AC") should be(0)
       }
 
       "aces low vs aces high" in {
-        Hand.straight
-          .compare(hand"AC 2S 3D 4H 5C", hand"TC JH QS KD AC") should be(-1)
-        Hand.straight
-          .compare(hand"TC JH QS KD AC", hand"AC 2S 3D 4H 5C") should be(+1)
+        Hand.straight.compare(hand"AC 2S 3D 4H 5C", hand"TC JH QS KD AC") should be(-1)
+        Hand.straight.compare(hand"TC JH QS KD AC", hand"AC 2S 3D 4H 5C") should be(+1)
       }
     }
 
@@ -191,45 +156,33 @@ class HandSpec extends FreeSpec with Matchers {
     "straight flush" - {
       "aces low" in {
         // Values differ:
-        Hand.straightFlush
-          .compare(hand"AH 2H 3H 4H 5H", hand"2H 3H 4H 5H 6H") should be(-1)
-        Hand.straightFlush
-          .compare(hand"2H 3H 4H 5H 6H", hand"AH 2H 3H 4H 5H") should be(+1)
+        Hand.straightFlush.compare(hand"AH 2H 3H 4H 5H", hand"2H 3H 4H 5H 6H") should be(-1)
+        Hand.straightFlush.compare(hand"2H 3H 4H 5H 6H", hand"AH 2H 3H 4H 5H") should be(+1)
 
         // One hand matches:
-        Hand.straightFlush
-          .compare(hand"AH 2H 3H 4H 6H", hand"AH 2H 3H 4H 5H") should be(-1)
-        Hand.straightFlush
-          .compare(hand"AH 2H 3H 4H 5H", hand"AH 2H 3H 4H 6H") should be(+1)
+        Hand.straightFlush.compare(hand"AH 2H 3H 4H 6H", hand"AH 2H 3H 4H 5H") should be(-1)
+        Hand.straightFlush.compare(hand"AH 2H 3H 4H 5H", hand"AH 2H 3H 4H 6H") should be(+1)
 
         // Neither hand matches:
-        Hand.straightFlush
-          .compare(hand"AH 2H 3H 4H 6H", hand"AH 2H 3H 4H 7H") should be(0)
+        Hand.straightFlush.compare(hand"AH 2H 3H 4H 6H", hand"AH 2H 3H 4H 7H") should be(0)
       }
 
       "aces high" in {
         // Values differ:
-        Hand.straightFlush
-          .compare(hand"9H TH JH QH KH", hand"TH JH QH KH AH") should be(-1)
-        Hand.straightFlush
-          .compare(hand"TH JH QH KH AH", hand"9H TH JH QH KH") should be(+1)
+        Hand.straightFlush.compare(hand"9H TH JH QH KH", hand"TH JH QH KH AH") should be(-1)
+        Hand.straightFlush.compare(hand"TH JH QH KH AH", hand"9H TH JH QH KH") should be(+1)
 
         // One hand matches:
-        Hand.straightFlush
-          .compare(hand"9H JH QH KH AH", hand"TH JH QH KH AH") should be(-1)
-        Hand.straightFlush
-          .compare(hand"TH JH QH KH AH", hand"9H JH QH KH AH") should be(+1)
+        Hand.straightFlush.compare(hand"9H JH QH KH AH", hand"TH JH QH KH AH") should be(-1)
+        Hand.straightFlush.compare(hand"TH JH QH KH AH", hand"9H JH QH KH AH") should be(+1)
 
         // Neither hand matches:
-        Hand.straightFlush
-          .compare(hand"9H JH QH KH AH", hand"8H JH QH KH AH") should be(0)
+        Hand.straightFlush.compare(hand"9H JH QH KH AH", hand"8H JH QH KH AH") should be(0)
       }
 
       "aces low vs aces high" in {
-        Hand.straightFlush
-          .compare(hand"AH 2H 3H 4H 5H", hand"TH JH QH KH AH") should be(-1)
-        Hand.straightFlush
-          .compare(hand"TH JH QH KH AH", hand"AH 2H 3H 4H 5H") should be(+1)
+        Hand.straightFlush.compare(hand"AH 2H 3H 4H 5H", hand"TH JH QH KH AH") should be(-1)
+        Hand.straightFlush.compare(hand"TH JH QH KH AH", hand"AH 2H 3H 4H 5H") should be(+1)
       }
     }
   }
@@ -242,7 +195,7 @@ class HandSpec extends FreeSpec with Matchers {
             (l beats r) && !(r beats l),
             s"$l does not beat $r",
             s"$l beats $r"
-        )
+          )
       )
 
     def tie(r: Hand): Matcher[Hand] =
@@ -252,7 +205,7 @@ class HandSpec extends FreeSpec with Matchers {
             !(l beats r) && !(r beats l),
             s"$l does not tie $r",
             s"$l ties $r"
-        )
+          )
       )
 
     "no winning hand" in {
