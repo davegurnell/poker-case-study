@@ -54,9 +54,7 @@ case class Hand(cards: Vector[Card]) {
   /**
     * All "straight" selections we can make from this hand.
     */
-  def straight(
-      ranking: Ranking[Card]
-  ): Vector[Selection[(Card, Card, Card, Card, Card)]] =
+  def straight(ranking: Ranking[Card]): Vector[Selection[(Card, Card, Card, Card, Card)]] =
     for {
       Selection(a, rest) <- this.chooseCard
       Selection(b, rest) <- rest.chooseCard if ranking.pred(b, a)
